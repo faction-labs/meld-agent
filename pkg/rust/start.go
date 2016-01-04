@@ -3,6 +3,7 @@ package rust
 import (
 	"fmt"
 	"os/exec"
+	"strconv"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
@@ -18,23 +19,23 @@ func (r *RustServer) Start(args *StartArgs) (int, error) {
 		"+server.globalchat",
 		"true",
 		"+server.ip",
-		args.ServerIP,
+		strconv.Quote(args.ServerIP),
 		"+rcon.ip",
-		args.RconIP,
+		strconv.Quote(args.RconIP),
 		"+server.port",
 		fmt.Sprintf("%d", args.ServerPort),
 		"+rcon.port",
 		fmt.Sprintf("%d", args.RconPort),
 		"+rcon.password",
-		args.RconPassword,
+		strconv.Quote(args.RconPassword),
 		"+server.maxplayers",
 		fmt.Sprintf("%d", args.MaxPlayers),
 		"+server.hostname",
-		args.Hostname,
+		strconv.Quote(args.Hostname),
 		"+server.identity",
-		args.Identity,
+		strconv.Quote(args.Identity),
 		"+server.level",
-		args.Level,
+		strconv.Quote(args.Level),
 		"+server.seed",
 		fmt.Sprintf("%d", args.Seed),
 		"+server.worldsize",
@@ -42,9 +43,9 @@ func (r *RustServer) Start(args *StartArgs) (int, error) {
 		"+server.saveinterval",
 		fmt.Sprintf("%d", args.SaveInterval),
 		"+server.description",
-		args.Description,
+		strconv.Quote(args.Description),
 		"+server.url",
-		args.URL,
+		strconv.Quote(args.URL),
 	}
 
 	binPath := RustDedicatedPath()
@@ -61,6 +62,8 @@ func (r *RustServer) Start(args *StartArgs) (int, error) {
 	time.Sleep(time.Millisecond * 500)
 
 	pid := c.Process.Pid
+
+	log.Debugf("rust server started: pid=%d", pid)
 
 	return pid, nil
 }
