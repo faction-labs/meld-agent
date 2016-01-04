@@ -7,6 +7,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/factionlabs/meld-agent/utils"
 )
 
 // Start runs a new Rust Server
@@ -15,7 +16,7 @@ func (r *RustServer) Start(args *StartArgs) (int, error) {
 
 	pArgs := []string{
 		"-batchmode",
-		"-nographics",
+		//"-nographics",
 		"+server.globalchat",
 		"true",
 		"+server.ip",
@@ -51,6 +52,7 @@ func (r *RustServer) Start(args *StartArgs) (int, error) {
 	binPath := RustDedicatedPath()
 
 	c := exec.Command(binPath, pArgs...)
+	c.Dir = utils.GetRustDir()
 
 	log.Debugf("starting rust server: cmd=%s args=%v", c.Path, c.Args)
 

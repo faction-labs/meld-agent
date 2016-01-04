@@ -10,8 +10,8 @@ type (
 	}
 
 	StartArgs struct {
-		Description  string
 		Hostname     string
+		Description  string
 		Identity     string
 		ServerIP     string
 		RconIP       string
@@ -24,5 +24,6 @@ type (
 		WorldSize    int
 		SaveInterval int
 		URL          string
+		WorkDir      string
 	}
 )
