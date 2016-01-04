@@ -2,15 +2,34 @@ package utils
 
 import (
 	"path/filepath"
+	"runtime"
 )
 
 const (
-	baseDefaultDir = "C:\\meld"
-	steamCmdURL    = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
-	oxideURL       = "https://github.com/OxideMod/Snapshots/raw/master/Oxide-Rust.zip"
+	baseDefaultDirWin   = "C:\\meld"
+	baseDefaultDirLinux = "/opt/meld"
+	steamCmdURL         = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
+	oxideURL            = "https://github.com/OxideMod/Snapshots/raw/master/Oxide-Rust.zip"
 )
 
-var (
-	SteamDefaultDir = filepath.Join(baseDefaultDir, "steam")
-	RustDefaultDir  = filepath.Join(baseDefaultDir, "rust")
-)
+func GetSteamDir() string {
+	switch runtime.GOOS {
+	case "windows":
+		return filepath.Join(baseDefaultDirWin, "steam")
+	case "linux":
+		return filepath.Join(baseDefaultDirLinux, "steam")
+	default:
+		return ""
+	}
+}
+
+func GetRustDir() string {
+	switch runtime.GOOS {
+	case "windows":
+		return filepath.Join(baseDefaultDirWin, "rust")
+	case "linux":
+		return filepath.Join(baseDefaultDirLinux, "rust")
+	default:
+		return ""
+	}
+}

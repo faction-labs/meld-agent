@@ -101,16 +101,6 @@ func InstallSteamCmd(destPath string) error {
 }
 
 func InstallRust(steamCmdPath, destPath string, update bool) error {
-	// check for existing rust
-	rustExe := filepath.Join(destPath, rustCmdName)
-
-	if _, err := os.Stat(rustExe); err == nil {
-		log.Debugf("found existing rust installation: path=%s", destPath)
-		if !update {
-			return nil
-		}
-	}
-
 	log.Infof("installing/updating rust: path=%s", destPath)
 
 	rustInstallArgs := []string{

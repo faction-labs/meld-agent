@@ -17,7 +17,7 @@ func (m *Meld) InstallSteam(args *InstallArgs, success *bool) error {
 	defer m.mu.Unlock()
 
 	if args.SteamPath == "" {
-		args.SteamPath = utils.SteamDefaultDir
+		args.SteamPath = utils.GetSteamDir()
 	}
 
 	// check for existing
@@ -49,11 +49,11 @@ func (m *Meld) InstallRust(args *InstallArgs, success *bool) error {
 	defer m.mu.Unlock()
 
 	if args.SteamPath == "" {
-		args.SteamPath = utils.SteamDefaultDir
+		args.SteamPath = utils.GetSteamDir()
 	}
 
 	if args.RustPath == "" {
-		args.RustPath = utils.RustDefaultDir
+		args.RustPath = utils.GetRustDir()
 	}
 
 	// check for existing
@@ -76,7 +76,7 @@ func (m *Meld) InstallOxide(args *InstallArgs, success *bool) error {
 	defer m.mu.Unlock()
 
 	if args.RustPath == "" {
-		args.RustPath = utils.RustDefaultDir
+		args.RustPath = utils.GetRustDir()
 	}
 
 	if err := utils.InstallOxideMod(args.RustPath); err != nil {
