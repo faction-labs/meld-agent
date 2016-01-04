@@ -3,12 +3,13 @@ package rust
 import (
 	"fmt"
 	"os/exec"
+	"time"
 
 	log "github.com/Sirupsen/logrus"
 )
 
 // Start runs a new Rust Server
-func (r *RustServer) Start(args *StartArgs) error {
+func (r *RustServer) Start(args *StartArgs) (int, error) {
 	log.Debugf("starting rust server: args=%v", args)
 
 	pArgs := []string{
@@ -52,5 +53,14 @@ func (r *RustServer) Start(args *StartArgs) error {
 
 	log.Debugf("starting rust server: cmd=%s args=%v", c.Path, c.Args)
 
-	return nil
+	if err := c.Start(); err != nil {
+		return -1, err
+	}
+
+	// wait slightly for process to start
+	time.Sleep(time.Millisecond * 500)
+
+	pid := c.Process.Pid
+
+	return pid, nil
 }

@@ -4,21 +4,22 @@ import (
 	"github.com/factionlabs/meld-agent/pkg/rust"
 )
 
-func (m *Meld) StartRust(args *rust.StartArgs, success *bool) error {
+func (m *Meld) StartRust(args *rust.StartArgs, pid *int) error {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
 	r, err := rust.NewRustServer(nil)
 	if err != nil {
-		*success = false
+		*pid = -1
 		return err
 	}
 
-	if err := r.Start(args); err != nil {
-		*success = false
+	p, err := r.Start(args)
+	if err != nil {
+		*pid = -1
 		return err
 	}
 
-	*success = true
+	*pid = p
 	return nil
 }
