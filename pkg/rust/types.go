@@ -10,6 +10,7 @@ type (
 	}
 
 	StartArgs struct {
+		BinPath      string
 		Hostname     string
 		Description  string
 		Identity     string

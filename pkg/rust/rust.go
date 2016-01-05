@@ -2,15 +2,21 @@ package rust
 
 import (
 	"fmt"
+	"path/filepath"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/factionlabs/meld-agent/utils"
 	"github.com/james4k/rcon"
 )
 
 const (
 	rustDedicatedWin   = "RustDedicated.exe"
 	rustDedicatedLinux = "rust_server"
+)
+
+var (
+	rustServerPidPath = filepath.Join(utils.GetRustDir(), "meld-server.pid")
 )
 
 type RustServerConfig struct {
